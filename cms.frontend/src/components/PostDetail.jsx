@@ -76,9 +76,14 @@ const PostDetail = () => {
 
             {/* NỘI DUNG CHI TIẾT ĐẦY ĐỦ */}
             {/* Sử dụng dangerouslySetInnerHTML giúp hiển thị chuẩn định dạng văn bản, xuống dòng từ Rich Text Editor của Admin */}
+            {/* Đồng thời tự động chèn Base URL vào trước các đường dẫn ảnh tương đối (/uploads/) để ảnh không bị vỡ */}
             <div
                 className="text-on-background font-body-lg text-body-lg leading-relaxed space-y-4 whitespace-pre-line"
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{ 
+                    __html: post.content 
+                        ? post.content.replace(/src="\/uploads\//g, `src="${process.env.REACT_APP_IMAGE_BASE_URL}/uploads/`) 
+                        : '' 
+                }}
             />
         </article>
     );
